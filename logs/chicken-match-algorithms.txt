@@ -1,0 +1,31 @@
+===EGG COLOR ALGORRITHM===
+
+1. Check for maxed out egg_color_count
+	1.A) Remove maxed out egg colors from the list of color choice
+	then return shortened list
+	1.B) Do nothing, proceed.
+2. Pick from color list
+3. Increase counter for egg_color_count
+4. Insert new color into new Chicken
+
+===CHICKEN POSITION ALGORITHM===
+
+1. Check for filled positions by measuring the length of the coop_row
+array, then by the next_box. (y, then x within y...
+... I think this is called a linked list?)
+	1.A) If coop_row has a length of 2 (starting from 0) 
+	skip row.
+	1.B) If coop_row's length is less than 2, then insert Chicken
+	(increasing the length).
+	
+2. Set chicken's internal X and Y according to their position in 
+the grid: [
+		[chicken1, chicken2, ...] # Row one
+		[] # Row two
+		[] # ...
+	]
+	
+3. Check if coop_list's length is 8 (including 0)
+	3.A) True: algorithim is finished, return coop_list
+	3.B) Repeat from Step 1.
+	
