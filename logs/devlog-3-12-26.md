@@ -31,3 +31,8 @@ the rows, and the contents of the list being the columns. (Y, and X)
 My bluetooth earbuds ran out of battery; I am held subject to the sappy 
 romance music of the car that I am riding in while writing this sentence.
 Car-Poolers can't be choosers. :(
+
+## Entry 4
+I was about to commit the work I did under Entry 3 to the git repository, but then I remembered that calling the algorithms file: `chicken-match-algorithms.txt` was really unnecessary.
+
+Renamed it to simply `algorithms.txt`
