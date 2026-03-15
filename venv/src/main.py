@@ -8,10 +8,12 @@ import pygame
 import random
 
 from chicken import *
+from scale import *
 
 WIDTH = 320
 HEIGHT = 180
 BOARD_SIZE = 9
+
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
