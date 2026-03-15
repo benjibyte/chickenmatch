@@ -6,8 +6,7 @@
 	1.B) Do nothing, proceed.
 2. Pick from color list
 3. Increase counter for egg_color_count
-4. Insert new color into new Chicken
-
+4. Insert new color into new Chicke
 ===CHICKEN POSITION ALGORITHM===
 
 1. Check for filled positions by measuring the length of the coop_row
