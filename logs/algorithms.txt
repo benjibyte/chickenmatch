@@ -1,13 +1,17 @@
 ===EGG COLOR ALGORITHM===
 
-1. Check for maxed out egg_color_count
-	1.A) Remove maxed out egg colors from the list of color choice
-	then return shortened list
-	1.B) Do nothing, proceed.
-2. Pick from color list
-3. Increase counter for egg_color_count
-4. Insert new color into new Chicken
+0. Create egg_count variable to limit the amount of each egg, so that we 
+don't have more eggs than pairs of matches.
+1. Reads the assets/egg directory for the different kinds of eggs.
+2. Use a directory for storing both the egg sprite, and the amount of 
+eggs hidden.
 
+3. WHILE egg_count is below max...
+	3.A) Create Card object
+	3.B) Pick a random egg_color from options-list
+	3.C) Assign egg_color to new Card
+	3.D) Increase egg_count and remove egg_color from options-list
+	
 
 
 ===CHICKEN POSITION ALGORITHM===
@@ -27,6 +31,6 @@ the grid: [
 	]
 	
 3. Check if coop_list's length is 8 (including 0)
-	3.A) True: algorithim is finished, return coop_list
+	3.A) True: algorithm is finished, return coop_list
 	3.B) Repeat from Step 1.
 	

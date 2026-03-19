@@ -7,8 +7,8 @@
 import pygame
 import random
 
-from chicken import *
-from scale import *
+from card import *
+from config import *
 
 WIDTH = 320
 HEIGHT = 180
