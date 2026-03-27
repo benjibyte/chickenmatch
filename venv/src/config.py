@@ -9,3 +9,4 @@ TOTAL_TILES = 16
 GRID_SIZE = 4
 
 BACKGROUND_SPRITE = os.path.join(CUR_DIR, "assets/img/background.png")
+CARD_SPRITE = os.path.join(CUR_DIR, "assets/img/chicken.png") 

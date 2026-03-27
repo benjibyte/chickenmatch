@@ -3,18 +3,36 @@
 # to cover this structure "card.py"
 from config import * 
 
+import pygame
 import os
 # We are going to use this for filepath operations
 # The eggs that the Chicken Cards will reveal will be based on how much
 # egg asset files are in the assets directory. Borrowing the file structure
 # spares extra work
 
-card_spritesheet = os.path.join(CUR_DIR, "/venv/assets/img/chicken_spritesheet.png") 
+ 
 # reveal_sprite = os.path.join( # The filepath for the )
 class Card():
-    def __init__(self, name) -> None:
+    def __init__(self, name, x ,y) -> None:
         self.name = name
+        self.sprite = CARD_SPRITE
+        self.hidden = False
+        self.x = x
+        self.y = y
+        #Spawn
+        self.surf = pygame.image.load(self.sprite)
+
+    def render(self):
+        return self.surf
         
-        # self.image = card_sprite
-        # self.reveal_sprite = reveal_sprite
-        
+    def set_sprite(self, sprite):
+        self.sprite = sprite
+    
+    def hide(self):
+        self.hidden = True
+
+    def show(self):
+        self.hidden = False
+        set_sprite(CARD_SPRITE)
+    
+

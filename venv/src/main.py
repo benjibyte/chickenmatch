@@ -13,7 +13,7 @@ from config import *
 WIDTH = 320
 HEIGHT = 180
 BOARD_SIZE = 9
-scale = 2
+
 
 
 pygame.init()
@@ -23,8 +23,10 @@ running = True
 
 # Load Pixel art graphics
 background = pygame.image.load(BACKGROUND_SPRITE)
+
+
 # Create Coop
-coop = []
+chicken = Card("robert", 160, 90)
 
 
 while running:
@@ -44,7 +46,7 @@ while running:
     screen.blit(background)
 
     # Render the next game frame here
-    
+    screen.blit(chicken.render())
 
     pygame.display.flip()
     clock.tick(60)
