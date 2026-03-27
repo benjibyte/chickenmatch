@@ -13,16 +13,16 @@ from config import *
 WIDTH = 320
 HEIGHT = 180
 BOARD_SIZE = 9
+scale = 2
 
 
 pygame.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.SCALED)
 clock = pygame.time.Clock()
 running = True
 
 # Load Pixel art graphics
-background = ""
-
+background = pygame.image.load(BACKGROUND_SPRITE)
 # Create Coop
 coop = []
 
@@ -40,7 +40,8 @@ while running:
             
     
     # Screen background
-    screen.fill("yellow")
+    screen.fill("black")
+    screen.blit(background)
 
     # Render the next game frame here
     

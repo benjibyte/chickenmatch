@@ -9,7 +9,7 @@ import os
 # egg asset files are in the assets directory. Borrowing the file structure
 # spares extra work
 
-card_spritesheet = os.path.join(ROOT_DIR, "/venv/assets/chicken_spritesheet.png") 
+card_spritesheet = os.path.join(CUR_DIR, "/venv/assets/img/chicken_spritesheet.png") 
 # reveal_sprite = os.path.join( # The filepath for the )
 class Card():
     def __init__(self, name) -> None:

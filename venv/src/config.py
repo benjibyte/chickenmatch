@@ -1,6 +1,6 @@
 import os
 CUR_DIR = os.getcwd()
-
+print(CUR_DIR)
 SCALE = 4
 TILE_SIZE = 16
 SCREEN_OG_WIDTH = 320
