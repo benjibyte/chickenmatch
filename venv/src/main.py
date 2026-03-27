@@ -46,7 +46,7 @@ while running:
     screen.blit(background)
 
     # Render the next game frame here
-    screen.blit(chicken.render())
+    screen.blit(source=chicken.render(), dest=chicken.get_pos())
 
     pygame.display.flip()
     clock.tick(60)

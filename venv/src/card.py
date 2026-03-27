@@ -27,6 +27,8 @@ class Card():
         
     def set_sprite(self, sprite):
         self.sprite = sprite
+    def get_pos(self):
+        return (self.x, self.y)
     
     def hide(self):
         self.hidden = True
