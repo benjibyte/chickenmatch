@@ -11,15 +11,21 @@ class Board():
         pointer_x = self.top_left_corner[0]
         pointer_y = self.top_left_corner[1]
         chicken_index = 0
-        name = f"chicken{chicken_index}"
+        
 
-        board_width = int(self.size) / 2
+        board_width = int(self.size) / 4
         for y in range(int(board_width)):
             for x in range(int(board_width)):
+                name = f"chicken{chicken_index}"
                 new_card = Card(name, pointer_x, pointer_y)
+                chicken_index += 1
                 self.deck.append(new_card)
                 pointer_x += CARD_SIZE
+
+            pointer_x = self.top_left_corner[0]
             pointer_y += CARD_SIZE
+
+
     def get_cards(self):
         return self.deck
 
