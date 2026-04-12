@@ -6,6 +6,7 @@
 
 import pygame
 import random
+import time
 
 from card import *
 from config import *

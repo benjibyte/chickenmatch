@@ -18,13 +18,15 @@ class Card():
         self.name = name
         self.sprite = CARD_SPRITE
         self.hidden = False
-        self.card_face = card_face
         self.x = x
         self.y = y
         #Spawn
         self.surf = pygame.image.load(self.sprite)
 
     def choose_face_type(self):
+        chosen_index = random.randit(0,CARD_FACE_TYPE.length)
+        face_type = CARD_FACE_TYPE[]
+        return face_type
 
 
     def render(self):
