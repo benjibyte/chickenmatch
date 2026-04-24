@@ -1,4 +1,4 @@
-#!/home/benjibyte/code/repos/chickenmatch/venv/bin/python3
+#!/home/benjibyte/code/chickenmatch/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
