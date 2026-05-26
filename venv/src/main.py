@@ -52,20 +52,14 @@ while running:
 
     # detect click on a specific chicken
     for chicken in coop.get_cards():
+        match_type = chicken.get_face()
         if chicken.is_clicked() == True:
             # Check for the amount of chicken cards flipped over,
-
+            print(match_type)
             if cards_flipped == (cards_flipped_for_match - 1):
-                match_type = chicken.get_face()
-            # If there isn't a match then simply use the flip_card() method
-            # to flip the card, and then increase the amount of flipped cards count.
-            #
-            # If there is one less than the amount of cards needed to check for a match (in my case 1, for a 2-card-match)
-            # then check if they are a match:
-                # If Match --> Play the Rooster Crow sound and trigger
-                #  match_found(*the kind of match, *what chickens need to disapear etc)
-                # If not Match --> play the sad cluck cluck sound
-
+                print(f"Cards flipped: {cards_flipped}")
+                
+                
 
     pygame.display.flip()
     clock.tick(60)

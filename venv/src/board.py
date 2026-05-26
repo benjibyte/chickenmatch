@@ -18,6 +18,9 @@ class Board():
             for x in range(int(board_width)):
                 name = f"chicken{chicken_index}"
                 new_card = Card(name, pointer_x, pointer_y)
+
+                new_card.set_face()
+
                 chicken_index += 1
                 self.deck.append(new_card)
                 pointer_x += CARD_SIZE

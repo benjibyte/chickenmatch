@@ -22,7 +22,8 @@ class Card():
         self.y = y
         #Spawn
         self.surf = pygame.image.load(self.sprite)
-        self.set_face()
+        self.card_face = self.set_face()
+
 
     def choose_face_type(self):
         chosen_index = random.randint(0,(len(CARD_FACE_TYPES) - 1))
@@ -59,10 +60,15 @@ class Card():
             return False
 
     def get_face(self):
+       
         return self.card_face
 
     def set_face(self):
         face = self.choose_face_type() # Get the random face type
         face_filepath = os.path.join(CUR_DIR, "assets/img/", f"{face}.png") 
         print(f"The {self.name} is hiding a {face}!") # return sprite, and log it to console
-
+        return face
+    
+    def render_face(self):
+        face_sprite = self.get_face()
+        face_surf = pygame.image.load(face_sprite)
