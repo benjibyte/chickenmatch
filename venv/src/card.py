@@ -14,25 +14,28 @@ import random
 
 # reveal_sprite = os.path.join( # The filepath for the )
 class Card():
-    def __init__(self, name, x ,y) -> None:
+    def __init__(self, name, x, y, face=None) -> None:
         self.name = name
         self.sprite = CARD_SPRITE
-        self.hidden = False
+        self.hidden = True
         self.x = x
         self.y = y
-        #Spawn
+        # Spawn
         self.surf = pygame.image.load(self.sprite)
-        self.card_face = self.set_face()
+        self.face_filepath = None
+        self.face_surf = None
+        self.card_face = None
+        self.set_face(face)
 
 
     def choose_face_type(self):
-        chosen_index = random.randint(0,(len(CARD_FACE_TYPES) - 1))
+        chosen_index = random.randint(0, len(CARD_FACE_TYPES) - 1)
         face_type = CARD_FACE_TYPES[chosen_index]
         return face_type
 
 
     def render(self):
-        return self.surf
+        return self.surf if self.hidden else self.render_face()
 
     def set_sprite(self, sprite):
         self.sprite = sprite
@@ -44,7 +47,7 @@ class Card():
 
     def show(self):
         self.hidden = False
-        set_sprite(CARD_SPRITE)
+        self.set_sprite(CARD_SPRITE)
 
     def is_clicked(self):
 
@@ -60,15 +63,17 @@ class Card():
             return False
 
     def get_face(self):
-       
         return self.card_face
 
-    def set_face(self):
-        face = self.choose_face_type() # Get the random face type
-        face_filepath = os.path.join(CUR_DIR, "assets/img/", f"{face}.png") 
-        print(f"The {self.name} is hiding a {face}!") # return sprite, and log it to console
-        return face
+    def set_face(self, face=None):
+        if face is None:
+            face = self.choose_face_type()
+
+        self.card_face = face
+        self.face_filepath = os.path.join(CUR_DIR, "assets/img", f"{face}.png")
+        self.face_surf = pygame.image.load(self.face_filepath)
+        print(f"The {self.name} is hiding a {face}!")
+        return self.card_face
     
     def render_face(self):
-        face_sprite = self.get_face()
-        face_surf = pygame.image.load(face_sprite)
+        return self.face_surf

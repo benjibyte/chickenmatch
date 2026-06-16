@@ -2,7 +2,7 @@
 # This is a very very late Christmas present for his Sister and her daughters.
 # Date of Program Creation: 3/13/26 m/dd/yy
 
-# See development log at /venv/logs/<date>.txt
+# See development log at /logs/<date>.md
 
 import pygame
 import random
