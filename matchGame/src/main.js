@@ -8,6 +8,7 @@
 // I couldn't compile to Web Assembly without a lot of headache and overhead issues.
 import kaplay from "kaplay";
 
+// Global variables
 const chickenColCount = 3;
 const chickenRowCount = 3;
 
@@ -18,8 +19,13 @@ const k = kaplay({
   height: 180,
   scale: 3,
 });
+
+// Load Assets
 loadSprite("chicken", "sprites/chicken.png");
 
+
+
+// Game ...
 let x = chickenStartPos[0];
 let y = chickenStartPos[1];
 for (let x = 0; x < chickenColCount; x++) {
