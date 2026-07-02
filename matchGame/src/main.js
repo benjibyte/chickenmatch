@@ -11,7 +11,6 @@ import kaplay from "kaplay";
 // Global variables & Kaplay Initialization
 
 const chickenColCount = 3;
-const chickenRowCount = 3;
 const spriteSize = 16;
 
 // layout
@@ -105,7 +104,24 @@ k.scene("game", () => {
 
       if (card1.faceValue === card2.faceValue) {
         // Match Case!
+        pairsFound++;
+        selectedCards = [];
+        // Make Egg disappear and bring back the chicken...
 
+        // Win Condition!
+        if (pairsFound === 3) {
+          gameWon = true;
+          statusText.text = "You Collected all the Eggs! You win!";
+        }
+      } else { // No match found
+        k.wait(0.8, () => {
+          if (card1.eggChild) k.destroy(card1.eggChild);
+          if (card2.eggChild) k.destroy(card2.eggChild);
+
+          card1.isFlipped = false;
+          card2.isFlipped = false;
+          selectedCards = [];
+        })
       }
     }
     
