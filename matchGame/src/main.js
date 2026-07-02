@@ -44,7 +44,7 @@ function shuffleArray(array) {
 
 // Setup hidden cards
 function setupHiddenCards() {
-  const eggs = ["brownEgg", "whiteEgg", "blueEgg", "brownEgg", "whiteEgg", "blueEgg", "brownEgg", "whiteEgg", "blueEgg"];
+  const eggs = ["brown_egg", "white_egg", "green_egg", "brown_egg", "white_egg", "green_egg", "brown_egg", "white_egg", "green_egg"];
   const cardFaces = shuffleArray(eggs);
   
   cardFaces.forEach((egg, index) => {
@@ -121,11 +121,15 @@ k.scene("game", () => {
           card1.isFlipped = false;
           card2.isFlipped = false;
           selectedCards = [];
-        })
+        });
       }
     }
-    
-  })
+  });
 
-})
+  k.onUpdate(() => {
+
+  });
+});
+
+k.go("game");
 
