@@ -12,12 +12,11 @@ import kaplay from "kaplay";
 
 const chickenColCount = 3;
 const spriteSize = 16;
-
+const gap = 12;
 // layout
-const spacingX = 45;
-const spacingY = 40;
-const startX = 65;
-const startY = 30;
+const totalGridSize = 16;
+const startX = (320 - totalGridSize) / 2; // get the center
+const startY = (180 - totalGridSize) / 2;
 
 const k = kaplay({
   width: 320,
@@ -27,9 +26,9 @@ const k = kaplay({
 
 // Load Assets
 k.loadSprite("chicken", "sprites/chicken.png");
-k.loadSprite("chicken", "sprites/brown_egg.png");
-k.loadSprite("chicken", "sprites/white_egg.png");
-k.loadSprite("chicken", "sprites/green_egg.png");
+k.loadSprite("brown_egg", "sprites/brown_egg.png");
+k.loadSprite("white_egg", "sprites/white_egg.png");
+k.loadSprite("green_egg", "sprites/green_egg.png");
 /*
  * I am going to use the Fisher Yates shuffle since JS doesn't have a native solution
  * */
@@ -53,8 +52,8 @@ function setupHiddenCards() {
     const row = Math.floor(index / chickenColCount);
 
     // Grid
-    const posX = startX + (col * (spriteSize + spacingX));
-    const posY = startY + (row * (spriteSize + spacingY));
+    const posX = startX + (col * (spriteSize + gap));
+    const posY = startY + (row * (spriteSize + gap));
 
     k.add([
       k.sprite("chicken"),
@@ -124,10 +123,6 @@ k.scene("game", () => {
         });
       }
     }
-  });
-
-  k.onUpdate(() => {
-
   });
 });
 
