@@ -12,7 +12,7 @@ import kaplay from "kaplay";
 
 const chickenColCount = 3;
 const spriteSize = 16;
-const gap = 12;
+const gap = 6;
 // layout
 const totalGridSize = 16;
 const startX = (320 - totalGridSize) / 2; // get the center
@@ -21,7 +21,7 @@ const startY = (180 - totalGridSize) / 2;
 const k = kaplay({
   width: 320,
   height: 180,
-  letterbox: true,
+  scale: 3
 });
 
 // Load Assets
@@ -63,7 +63,8 @@ function setupHiddenCards() {
       {
         id: index,
         faceValue: egg,
-        isFlipped: false
+        isFlipped: false,
+        eggChild: null,
       }
     ]);
   })
@@ -73,6 +74,7 @@ k.scene("game", () => {
   let gameWon = false;
   let selectedCards = [];
   let pairsFound = 0;
+  let isChecking = false;
 
   setupHiddenCards();
 
@@ -83,7 +85,7 @@ k.scene("game", () => {
 
   k.onClick("card", (card) => {
     // Guarding against multiple clicks or checking for win condition 
-    if (card.isFlipped || selectedCards.length >= 2 || gameWon) return; // prevent if card is clicked already
+    if (card.isFlipped || selectedCards.length >= 2 || gameWon || isChecking) return; // prevent if card is clicked already
 
     // Once a card is clicked flip it over
     card.isFlipped = true;
@@ -98,7 +100,7 @@ k.scene("game", () => {
     ]);
 
     // Check for a match if there are two cards flipped over
-    if (selectedCards.length === 2) {
+    if (selectedCards.length >= 2) {
       const [card1, card2] = selectedCards;
 
       if (card1.faceValue === card2.faceValue) {
@@ -113,13 +115,17 @@ k.scene("game", () => {
           statusText.text = "You Collected all the Eggs! You win!";
         }
       } else { // No match found
-        k.wait(0.8, () => {
+        isChecking = true;
+
+        k.wait(0.6, () => {
           if (card1.eggChild) k.destroy(card1.eggChild);
           if (card2.eggChild) k.destroy(card2.eggChild);
 
           card1.isFlipped = false;
           card2.isFlipped = false;
           selectedCards = [];
+
+          isChecking = false;
         });
       }
     }
