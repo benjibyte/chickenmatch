@@ -15,13 +15,13 @@ const spriteSize = 16;
 const gap = 6;
 // layout
 const totalGridSize = 16;
-const startX = (320 - totalGridSize) / 2; // get the center
-const startY = (180 - totalGridSize) / 2;
+const startX = ((320 - totalGridSize) / 2) - 22; // get the center
+const startY = ((180 - totalGridSize) / 2) - 22; // get the center
 
 const k = kaplay({
   width: 320,
   height: 180,
-  scale: 3
+  scale: 4
 });
 
 // Load Assets
@@ -80,56 +80,67 @@ k.scene("game", () => {
 
   const statusText = k.add([
     k.text("Find matching pairs!", { size: 10 }),
-    k.pos(10, 10)
+    k.pos(10, 10),
+    k.color("#000000")
   ]);
 
+  // When a Egg Card is clicked
   k.onClick("card", (card) => {
-    // Guarding against multiple clicks or checking for win condition 
-    if (card.isFlipped || selectedCards.length >= 2 || gameWon || isChecking) return; // prevent if card is clicked already
+    if (isChecking || card.isFlipped || selectedCards.length >= 3) {
+      return;
+    }
 
-    // Once a card is clicked flip it over
+    // Flip the card and hide the Chicken using Opacity
     card.isFlipped = true;
     selectedCards.push(card);
-     
-  // spawn sprite and place it on top of the chicken card
-    card.eggChild = card.add([
+    card.opacity = 0;
+
+    // Spaqwn the egg sprite on top of the chicken
+    card.eggChild = card.add ([
       k.sprite(card.faceValue),
-      k.pos(8, 8),
+      k.pos(8,8),
       k.anchor("center"),
-      "revealedEgg"
+      "revealedEgg" // We will use this tag later to remove it
     ]);
 
-    // Check for a match if there are two cards flipped over
-    if (selectedCards.length >= 2) {
-      const [card1, card2] = selectedCards;
+    // Only check logic when we have exactly 3 cards selected
+    if (selectedCards.length === 3) {
+      isChecking = true;
 
-      if (card1.faceValue === card2.faceValue) {
-        // Match Case!
+      const [card1, card2, card3] = selectedCards;
+      
+      // Check if all three cards match!
+      if (card1.faceValue === card2.faceValue && card2.faceValue === card3.faceValue) {
+        //Match Found!
         pairsFound++;
         selectedCards = [];
-        // Make Egg disappear and bring back the chicken...
+        isChecking = false;
 
-        // Win Condition!
+        // Game Win Condition
         if (pairsFound === 3) {
           gameWon = true;
-          statusText.text = "You Collected all the Eggs! You win!";
+          statusText.text = "You found all the eggs! You win!";
         }
-      } else { // No match found
-        isChecking = true;
-
+      } else {
+        // No match, turn cards back over after a short delay
         k.wait(0.6, () => {
+          // Remove egg sprites
           if (card1.eggChild) k.destroy(card1.eggChild);
           if (card2.eggChild) k.destroy(card2.eggChild);
-
+          if (card3.eggChild) k.destroy(card3.eggChild);
+          // Reset card state
           card1.isFlipped = false;
+          card1.opacity = 1;
           card2.isFlipped = false;
+          card2.opacity = 1;
+          card3.isFlipped = false;
+          card3.opacity = 1;
           selectedCards = [];
-
           isChecking = false;
         });
       }
     }
-  });
+  })
 });
 
 k.go("game");
