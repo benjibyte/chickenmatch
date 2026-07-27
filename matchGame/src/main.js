@@ -29,6 +29,7 @@ k.loadSprite("chicken", "sprites/chicken.png");
 k.loadSprite("brown_egg", "sprites/brown_egg.png");
 k.loadSprite("white_egg", "sprites/white_egg.png");
 k.loadSprite("green_egg", "sprites/green_egg.png");
+k.loadSprite("background", "sprites/background.png");
 /*
  * I am going to use the Fisher Yates shuffle since JS doesn't have a native solution
  * */
