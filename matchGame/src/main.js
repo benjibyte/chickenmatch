@@ -18,6 +18,19 @@ const totalGridSize = 16;
 const startX = ((320 - totalGridSize) / 2) - 22; // get the center
 const startY = ((180 - totalGridSize) / 2) - 22; // get the center
 
+// Some animation variables
+const FRAME_WIDTH = 16;
+const FRAME_HEIGHT = 16;
+
+const POOF_TOTAL_FRAMES = 8;
+const poofSheet = loadSpriteSheet("sprites/poof.png", {
+  frameWidth: FRAME_WIDTH,
+  frameHeight: FRAME_HEIGHT,
+  numFrames: POOF_TOTAL_FRAMES
+});
+
+
+
 const k = kaplay({
   width: 320,
   height: 180,
@@ -98,6 +111,8 @@ k.scene("game", () => {
     card.isFlipped = true;
     selectedCards.push(card);
     card.opacity = 0;
+
+    // Play the animation
 
     // Spaqwn the egg sprite on top of the chicken
     card.eggChild = card.add ([
