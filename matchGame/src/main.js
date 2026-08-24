@@ -32,7 +32,25 @@ k.loadSprite("brown_egg", "sprites/brown_egg.png");
 k.loadSprite("white_egg", "sprites/white_egg.png");
 k.loadSprite("green_egg", "sprites/green_egg.png");
 k.loadSprite("background", "sprites/background.png");
-const poofSheet = k.loadSpriteSheet("poof", "sprites/poof.png");
+k.loadSprite("poof", "sprites/poof.png", {
+  sliceX: 8,
+  sliceY: 1,
+  anims: {
+    poof: { from:0, to: 7},
+  },
+});
+
+function poof(x, y) {
+  const smoke = add([
+    sprite("poof", { anim: "poof" }),
+    pos(x, y),
+    anchor("center"),
+  ]);
+
+  smoke.play("poof");
+  smoke.onAnimEnd(() => destroy(smoke));
+}
+
 /*
  * I am going to use the Fisher Yates shuffle since JS doesn't have a native solution
  * */
@@ -113,7 +131,9 @@ k.scene("game", () => {
     card.opacity = 0;
 
     // Play the animation
-    poof(card.pos[0], card.pos[1]);
+    let poofX = card.pos.x + 8
+    let poofY = card.pos.y + 8;
+    poof(poofX, poofY);
     // Spaqwn the egg sprite on top of the chicken
     card.eggChild = card.add ([
       k.sprite(card.faceValue),
