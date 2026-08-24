@@ -42,6 +42,7 @@ function shuffleArray(array) {
   return newArray;
 }
 
+
 // Setup hidden cards
 function setupHiddenCards() {
   const eggs = ["brown_egg", "white_egg", "green_egg", "brown_egg", "white_egg", "green_egg", "brown_egg", "white_egg", "green_egg"];
@@ -70,6 +71,8 @@ function setupHiddenCards() {
     ]);
   })
 }
+
+
 
 k.scene("game", () => {
   let gameWon = false;
