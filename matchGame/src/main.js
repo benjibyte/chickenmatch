@@ -18,12 +18,39 @@ const totalGridSize = 16;
 const startX = ((320 - totalGridSize) / 2) - 22; // get the center
 const startY = ((180 - totalGridSize) / 2) - 22; // get the center
 
+
+
+const k = kaplay({
+  width: 320,
+  height: 180,
+  scale: 4
+});
+
+// Load Assets
+k.loadSprite("chicken", "sprites/chicken.png");
+k.loadSprite("brown_egg", "sprites/brown_egg.png");
+k.loadSprite("white_egg", "sprites/white_egg.png");
+k.loadSprite("green_egg", "sprites/green_egg.png");
+k.loadSprite("background", "sprites/background.png");
+const poofSheet = k.loadSpriteSheet("poof", "sprites/poof.png");
+/*
+ * I am going to use the Fisher Yates shuffle since JS doesn't have a native solution
+ * */
+function shuffleArray(array) {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+}
+
 // Some animation variables
 const FRAME_WIDTH = 16;
 const FRAME_HEIGHT = 16;
 
 const POOF_TOTAL_FRAMES = 8;
-const poofSheet = loadSpriteSheet("poof","sprites/poof.png");
+
 let frameIndex = 0;
 let animTimer = 0;
 
@@ -48,31 +75,6 @@ function poof(x, y) {
     srcW: FRAME_WIDTH,
     srcH: FRAME_HEIGHT,
   });
-}
-
-
-const k = kaplay({
-  width: 320,
-  height: 180,
-  scale: 4
-});
-
-// Load Assets
-k.loadSprite("chicken", "sprites/chicken.png");
-k.loadSprite("brown_egg", "sprites/brown_egg.png");
-k.loadSprite("white_egg", "sprites/white_egg.png");
-k.loadSprite("green_egg", "sprites/green_egg.png");
-k.loadSprite("background", "sprites/background.png");
-/*
- * I am going to use the Fisher Yates shuffle since JS doesn't have a native solution
- * */
-function shuffleArray(array) {
-  const newArray = [...array];
-  for (let i = newArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-  }
-  return newArray;
 }
 
 
@@ -133,7 +135,7 @@ k.scene("game", () => {
     card.opacity = 0;
 
     // Play the animation
-
+    poof(card.pos[0], card.pos[1]);
     // Spaqwn the egg sprite on top of the chicken
     card.eggChild = card.add ([
       k.sprite(card.faceValue),
