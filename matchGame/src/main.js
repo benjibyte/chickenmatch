@@ -54,28 +54,6 @@ const POOF_TOTAL_FRAMES = 8;
 let frameIndex = 0;
 let animTimer = 0;
 
-function updateAnimation(dt) {
-  animTimer += dt;
-
-  if (animTimer > 0.12) {
-    animTimer = 0;
-    frameIndex = (frameIndex + 1) % POOF_TOTAL_FRAMES;
-  }
-}
-
-function poof(x, y) {
-  const srcX = frameIndex * FRAME_WIDTH;
-  const srcY = 0;
-
-  drawSprite(poofSheet, {
-    x: x,
-    y: y,
-    srcX: srcX,
-    srcY: srcY,
-    srcW: FRAME_WIDTH,
-    srcH: FRAME_HEIGHT,
-  });
-}
 
 
 // Setup hidden cards
