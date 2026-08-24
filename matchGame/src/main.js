@@ -47,7 +47,7 @@ function poof(x, y) {
     anchor("center"),
   ]);
 
-  smoke.play("poof");
+  smoke.play("poof", { speed: 12 });
   smoke.onAnimEnd(() => destroy(smoke));
 }
 
@@ -162,7 +162,7 @@ k.scene("game", () => {
         }
       } else {
         // No match, turn cards back over after a short delay
-        k.wait(0.6, () => {
+        k.wait(0.8, () => {
           // Remove egg sprites
           if (card1.eggChild) k.destroy(card1.eggChild);
           if (card2.eggChild) k.destroy(card2.eggChild);
