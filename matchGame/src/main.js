@@ -18,8 +18,6 @@ const totalGridSize = 16;
 const startX = ((320 - totalGridSize) / 2) - 22; // get the center
 const startY = ((180 - totalGridSize) / 2) - 22; // get the center
 
-
-
 const k = kaplay({
   width: 320,
   height: 180,
@@ -39,6 +37,13 @@ k.loadSprite("poof", "sprites/poof.png", {
     poof: { from:0, to: 7},
   },
 });
+k.loadSprite("feathers", "sprites/feathers.png", {
+  sliceX: 8,
+  sliceY: 1,
+  anims: {
+    feathers: { from:0, to: 7},
+  },
+});
 
 function poof(x, y) {
   const smoke = add([
@@ -47,10 +52,20 @@ function poof(x, y) {
     anchor("center"),
   ]);
 
-  smoke.play("poof", { speed: 12 });
+  smoke.play("poof", { speed: 16 });
   smoke.onAnimEnd(() => destroy(smoke));
 }
 
+function feathers(x, y) {
+  const feathers = add([
+    sprite("feathers", {anim: "feathers"}),
+    pos(x, y),
+    anchor("center"),
+  ]);
+
+  feathers.play("feathers", { speed: 8 });
+  feathers.onAnimEnd(() => destroy(feathers));
+}
 /*
  * I am going to use the Fisher Yates shuffle since JS doesn't have a native solution
  * */
@@ -71,9 +86,6 @@ const POOF_TOTAL_FRAMES = 8;
 
 let frameIndex = 0;
 let animTimer = 0;
-
-
-
 // Setup hidden cards
 function setupHiddenCards() {
   const eggs = ["brown_egg", "white_egg", "green_egg", "brown_egg", "white_egg", "green_egg", "brown_egg", "white_egg", "green_egg"];
@@ -102,10 +114,6 @@ function setupHiddenCards() {
     ]);
   })
 }
-
-
-
-
 k.scene("game", () => {
   let gameWon = false;
   let selectedCards = [];
@@ -115,7 +123,6 @@ k.scene("game", () => {
   const backgroundImage = k.add([sprite("background"), pos(0,0)]);
 
   setupHiddenCards();
-
 
   const statusText = k.add([
     k.text("Find matching pairs!", { size: 10 }),
@@ -135,7 +142,7 @@ k.scene("game", () => {
     card.opacity = 0;
 
     // Play the animation
-    let poofX = card.pos.x + 8
+    let poofX = card.pos.x + 8;
     let poofY = card.pos.y + 8;
     poof(poofX, poofY);
     // Spaqwn the egg sprite on top of the chicken
@@ -145,17 +152,21 @@ k.scene("game", () => {
       k.anchor("center"),
       "revealedEgg" // We will use this tag later to remove it
     ]);
-
     // Only check logic when we have exactly 3 cards selected
     if (selectedCards.length === 3) {
       isChecking = true;
-
-      const [card1, card2, card3] = selectedCards;
-      
+      const [card1, card2, card3] = selectedCards;  
       // Check if all three cards match!
       if (card1.faceValue === card2.faceValue && card2.faceValue === card3.faceValue) {
         //Match Found!
         pairsFound++;
+        // play the feathers animation for each chicken
+        selectedCards.forEach(chicken => {
+          chicken.eggChild.opacity = 0;
+          let feathersX = chicken.pos.x + 8;
+          let feathersY = chicken.pos.y + 8;
+          feathers(feathersX, feathersY);
+        });
         selectedCards = [];
         isChecking = false;
 
@@ -185,6 +196,4 @@ k.scene("game", () => {
     }
   })
 });
-
 k.go("game");
-
