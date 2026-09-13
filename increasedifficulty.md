@@ -1,0 +1,2 @@
+# How to make more chickens
+Kaplay reads from an array of names like "blue_egg" and then creates a chicken with that egg hidden. So all one has to do to create more chickens is add more entires to the eggs array, change the chickenColCount variable, and redraw the background
