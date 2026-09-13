@@ -103,6 +103,8 @@ function setupHiddenCards() {
   })
 }
 
+// Render the background
+const backgroundImage = 
 
 
 k.scene("game", () => {
