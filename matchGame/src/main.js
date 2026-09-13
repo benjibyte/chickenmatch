@@ -103,8 +103,7 @@ function setupHiddenCards() {
   })
 }
 
-// Render the background
-const backgroundImage = k.add([sprite("background"), pos(0,0)]);
+
 
 
 k.scene("game", () => {
@@ -112,8 +111,11 @@ k.scene("game", () => {
   let selectedCards = [];
   let pairsFound = 0;
   let isChecking = false;
+  // Render the background
+  const backgroundImage = k.add([sprite("background"), pos(0,0)]);
 
   setupHiddenCards();
+
 
   const statusText = k.add([
     k.text("Find matching pairs!", { size: 10 }),
