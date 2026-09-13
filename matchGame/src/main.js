@@ -44,6 +44,13 @@ k.loadSprite("feathers", "sprites/feathers.png", {
     feathers: { from:0, to: 7},
   },
 });
+// k.loadSprite("reset_btn", "sprites/reset_btn", {
+//   sliceX: 3,
+//   sliceY: 1, 
+//   anims: {
+//     press: { from:0, to: 2},
+//   }
+// });
 
 function poof(x, y) {
   const smoke = add([
