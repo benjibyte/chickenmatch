@@ -12,7 +12,7 @@ import kaplay from "kaplay";
 
 const chickenColCount = 3;
 const spriteSize = 16;
-const gap = 6;
+const gap = 0;
 // layout
 const totalGridSize = 16;
 const startX = ((320 - totalGridSize) / 2) - 22; // get the center
