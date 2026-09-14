@@ -1,0 +1,25 @@
+{
+  "name": "Chicken Match",
+  "short_name": "Chicken Match",
+  "description": "A three-of-a-kind chicken memory game.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#18211f",
+  "theme_color": "#f4c95d",
+  "icons": [
+    {
+      "src": "./icons/chicken-match-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/chicken-match-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
