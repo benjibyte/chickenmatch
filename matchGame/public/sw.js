@@ -1,8 +1,8 @@
-const CACHE_NAME = "chicken-match-v1";
+const chicken_match_v1 = "chicken-match-v1";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
+    caches.open(chicken_match_v1).then((cache) => {
       const base = new URL("./", self.registration.scope).pathname;
       return cache.addAll([
         base,
@@ -20,7 +20,7 @@ self.addEventListener("activate", (event) => {
     caches.keys().then((cacheNames) =>
       Promise.all(
         cacheNames
-          .filter((cacheName) => cacheName !== CACHE_NAME)
+          .filter((cacheName) => cacheName !== chicken_match_v1)
           .map((cacheName) => caches.delete(cacheName)),
       ),
     ),
@@ -36,7 +36,7 @@ self.addEventListener("fetch", (event) => {
 
       return fetch(event.request).then((networkResponse) => {
         const responseCopy = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
+        caches.open(chicken_match_v1).then((cache) => {
           cache.put(event.request, responseCopy);
         });
         return networkResponse;

@@ -28,7 +28,6 @@ const k = kaplay({
 k.loadSound("burk", "/sounds/chicken-select.mp3");
 k.loadSound("burgack", "/sounds/chicken-poof.mp3");
 k.loadSound("pop", "/sounds/pop.mp3");
-k.loadSound("victory", "/sounds/victory.mp3");
 
 k.loadSprite("chicken", "sprites/chicken.png");
 k.loadSprite("brown_egg", "sprites/brown_egg.png");
