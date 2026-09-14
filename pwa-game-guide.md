@@ -10,7 +10,22 @@ A PWA needs four pieces:
 3. A service worker for offline caching.
 4. HTTPS in production, or `localhost` during development.
 
-The project already uses Vite with `base: "./"`, so relative URLs work when the game is deployed under a subfolder.
+The project already uses Vite with `base: "./"`, so relative URLs work when the game is deployed under a subfolder. The game is designed as a 16:9 landscape experience, which is a good fit for iPad and landscape iPhone play.
+
+## Mobile sizing strategy
+
+Keep the internal game world at 320x180. This lets the existing card positions and touch hitboxes stay predictable. Kaplay scales that world into the available device space with letterboxing:
+
+```js
+const k = kaplay({
+  width: 320,
+  height: 180,
+  stretch: true,
+  letterbox: true,
+});
+```
+
+`stretch: true` fills the available canvas area. `letterbox: true` preserves the 16:9 ratio instead of stretching the art or hitboxes. On a portrait iPhone, the installed app requests landscape orientation from the manifest; in a browser tab, users should rotate the phone for the intended layout.
 
 ## 1. Add the manifest
 
@@ -59,16 +74,53 @@ Export square PNGs at the exact sizes above. Use the chicken or egg artwork with
 
 ## 3. Update `index.html`
 
-Replace the current head in `matchGame/index.html` with:
+Use a complete document in `matchGame/index.html` with a mobile viewport and a canvas that fills the safe area:
 
 ```html
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#f4c95d" />
-  <link rel="manifest" href="./manifest.webmanifest" />
-  <title>Chicken Match</title>
-</head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#18211f" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <title>Chicken Match</title>
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        overscroll-behavior: none;
+        background: #18211f;
+      }
+
+      body {
+        min-height: 100dvh;
+        padding: env(safe-area-inset-top) env(safe-area-inset-right)
+          env(safe-area-inset-bottom) env(safe-area-inset-left);
+        touch-action: none;
+      }
+
+      canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="src/main.js" type="module"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./sw.js");
+        });
+      }
+    </script>
+  </body>
+</html>
 ```
 
 The viewport metadata makes the game fit phone screens. The relative manifest URL matches the Vite configuration.
@@ -163,7 +215,11 @@ k.loadSprite("chicken", "sprites/chicken.png");
 k.loadSound("burk", "sounds/chicken-select.mp3");
 ```
 
-Avoid leading `/` paths for assets. A leading slash points to the domain root and can fail when the game is hosted at `/chickenmatch/`.
+Avoid leading `/` paths for assets. A leading slash points to the domain root and can fail when the game is hosted at `/chickenmatch/`:
+
+```js
+k.loadSound("burk", "sounds/chicken-select.mp3");
+```
 
 ## 7. Build and test locally
 
@@ -185,7 +241,20 @@ Check the following in Chromium DevTools:
 
 To test offline mode, load the game once, enable the browser's Offline network setting, and reload. Confirm that the shell and already-cached assets still load.
 
-## 8. Deploy over HTTPS
+## 8. Test iPhone and iPad layouts
+
+Use Safari Web Inspector or Chrome DevTools device emulation first, then test on real hardware:
+
+1. Test an iPhone in portrait and landscape. Landscape is the intended play orientation.
+2. Test an iPad in both orientations and at split-screen widths.
+3. Confirm the canvas remains centered, the 3x3 card grid is fully visible, and no page scrolling occurs.
+4. Tap every card and the reset button; do not rely only on mouse clicks.
+5. Test with the browser UI visible and as an installed standalone PWA, because their safe-area sizes differ.
+6. Load the game once, turn on Offline mode, and reload to verify cached assets.
+
+If the game feels too small on a portrait phone, do not stretch it independently on the x and y axes. Keep the letterbox behavior and guide the player to rotate the device; independent stretching makes the pixel art and touch coordinates inconsistent.
+
+## 9. Deploy over HTTPS
 
 Production service workers require HTTPS. Deploy to a host such as GitHub Pages, Netlify, Cloudflare Pages, or another HTTPS server.
 
@@ -199,7 +268,7 @@ https://example.com/game/
 
 The current relative Vite base supports a repository subpath, but test the published URL rather than only the local preview.
 
-## 9. Update the cache on releases
+## 10. Update the cache on releases
 
 For each release:
 

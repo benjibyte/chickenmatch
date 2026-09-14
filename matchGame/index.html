@@ -1,16 +1,53 @@
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#f4c95d" />
-  <link rel="manifest" href="./manifest.webmanifest" />
-  <title>Chicken Match</title>
-  <script src="src/main.js" type="module"></script>
-  <script>
-    if ("serviceWorker" in navigator) {
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#18211f" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <title>Chicken Match</title>
+    <style>
+      :root {
+        background: #18211f;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: #18211f;
+        overscroll-behavior: none;
+      }
+
+      body {
+        min-height: 100dvh;
+        padding: env(safe-area-inset-top) env(safe-area-inset-right)
+          env(safe-area-inset-bottom) env(safe-area-inset-left);
+        touch-action: none;
+      }
+
+      canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="src/main.js" type="module"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
           navigator.serviceWorker.register("./sw.js");
-    
-      });
-    }
-  </script>
-</head>
+        });
+      }
+    </script>
+  </body>
+</html>
