@@ -133,6 +133,18 @@ function setupHiddenCards() {
     ]);
   })
 }
+
+function winScreen() {
+  const winnerBanner = add([
+    sprite("youWin"),
+    pos(center().x, center().y - 50),
+    anchor("center"),
+    opacity(0)
+  ]);
+  
+
+}
+
 k.scene("game", () => {
   let gameWon = false;
   let selectedCards = [];
@@ -220,5 +232,15 @@ k.scene("game", () => {
       }
     }
   })
+
+  // Win condition
+  if (pairsFound === 3) {
+    
+    
+  }
+
 });
+
+
+
 k.go("game");
