@@ -25,6 +25,11 @@ const k = kaplay({
 });
 
 // Load Assets
+k.loadSound("burk", "/sounds/chicken-select.mp3");
+k.loadSound("burgack", "/sounds/chicken-poof.mp3");
+k.loadSound("pop", "/sounds/pop.mp3");
+k.loadSound("victory", "/sounds/victory.mp3");
+
 k.loadSprite("chicken", "sprites/chicken.png");
 k.loadSprite("brown_egg", "sprites/brown_egg.png");
 k.loadSprite("white_egg", "sprites/white_egg.png");
@@ -44,13 +49,13 @@ k.loadSprite("feathers", "sprites/feathers.png", {
     feathers: { from:0, to: 7},
   },
 });
-// k.loadSprite("reset_btn", "sprites/reset_btn", {
-//   sliceX: 3,
-//   sliceY: 1, 
-//   anims: {
-//     press: { from:0, to: 2},
-//   }
-// });
+k.loadSprite("reset_btn", "sprites/reset_btn", {
+  sliceX: 3,
+  sliceY: 1, 
+  anims: {
+    press: { from:0, to: 2},
+  }
+});
 
 function poof(x, y) {
   const smoke = add([
@@ -59,6 +64,13 @@ function poof(x, y) {
     anchor("center"),
   ]);
 
+  // making the burk burk chicken sounds more diverse
+  const soundSpeed = rand(0.7, 1.1);
+  play("burk", {
+    volume: 0.5,
+    speed: soundSpeed,
+    loop: false
+  });
   smoke.play("poof", { speed: 16 });
   smoke.onAnimEnd(() => destroy(smoke));
 }
@@ -167,6 +179,12 @@ k.scene("game", () => {
       if (card1.faceValue === card2.faceValue && card2.faceValue === card3.faceValue) {
         //Match Found!
         pairsFound++;
+        // play the BUGAAK sound
+        play("burgack", {
+          volume: 1.0,
+          speed: 0.9,
+          loop: false
+         });
         // play the feathers animation for each chicken
         selectedCards.forEach(chicken => {
           chicken.eggChild.opacity = 0;
