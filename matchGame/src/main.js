@@ -62,6 +62,12 @@ function poof(x, y) {
     sprite("poof", { anim: "poof" }),
     pos(x, y),
     anchor("center"),
+
+function poof(x, y) {
+  const smoke = add([
+    sprite("poof", { anim: "poof" }),
+    pos(x, y),
+   
   ]);
 
   // making the burk burk chicken sounds more diverse
@@ -73,7 +79,7 @@ function poof(x, y) {
   });
   smoke.play("poof", { speed: 16 });
   smoke.onAnimEnd(() => destroy(smoke));
-}
+};
 
 function feathers(x, y) {
   const feathers = add([
@@ -97,14 +103,6 @@ function shuffleArray(array) {
   return newArray;
 }
 
-// Some animation variables
-const FRAME_WIDTH = 16;
-const FRAME_HEIGHT = 16;
-
-const POOF_TOTAL_FRAMES = 8;
-
-let frameIndex = 0;
-let animTimer = 0;
 // Setup hidden cards
 function setupHiddenCards() {
   const eggs = ["brown_egg", "white_egg", "green_egg", "brown_egg", "white_egg", "green_egg", "brown_egg", "white_egg", "green_egg"];
@@ -134,16 +132,7 @@ function setupHiddenCards() {
   })
 }
 
-function winScreen() {
-  const winnerBanner = add([
-    sprite("youWin"),
-    pos(center().x, center().y - 50),
-    anchor("center"),
-    opacity(0)
-  ]);
-  
 
-}
 
 k.scene("game", () => {
   let gameWon = false;
@@ -210,7 +199,39 @@ k.scene("game", () => {
         // Game Win Condition
         if (pairsFound === 3) {
           gameWon = true;
-          statusText.text = "You found all the eggs! You win!";
+          const winnerBanner = add([
+            sprite("youWin"),
+            pos(center().x, center().y - 50),
+            anchor("center"),
+            opacity(0)
+          ]);
+        
+          const resetButton = add([
+            sprite("reset_btn", { frame: 0 }),
+            pos(center().x, center().y + 60),
+            anchor("center"),
+            area(),
+            opacity(0) // Keep it at 0 opacity until the player wins the game
+          ]);
+
+          tween(
+            0,
+            1,
+            1.2,
+            (value) =>  {
+              winnerBanner.opacity = value;
+              resetButton.opacity = value;
+            },
+            easings.easeOutQuad
+          );
+        
+          resetButton.onClick(() => { // When the reset button is clicked, reload the game scene
+            if (resetButton.opacity  > 0.8) {
+
+              cursor("default");
+              go("game");
+            }
+    });
         }
       } else {
         // No match, turn cards back over after a short delay
@@ -235,11 +256,11 @@ k.scene("game", () => {
 
   // Win condition
   if (pairsFound === 3) {
-    
-    
-  }
 
-});
+    
+  };
+
+})
 
 
 
