@@ -35,6 +35,7 @@ k.loadSprite("brown_egg", "sprites/brown_egg.png");
 k.loadSprite("white_egg", "sprites/white_egg.png");
 k.loadSprite("green_egg", "sprites/green_egg.png");
 k.loadSprite("background", "sprites/background.png");
+k.loadSprite("you_win", "sprites/you_win.png");
 k.loadSprite("poof", "sprites/poof.png", {
   sliceX: 8,
   sliceY: 1,
@@ -49,7 +50,7 @@ k.loadSprite("feathers", "sprites/feathers.png", {
     feathers: { from:0, to: 7},
   },
 });
-k.loadSprite("reset_btn", "sprites/reset_btn", {
+k.loadSprite("reset_btn", "sprites/reset_btn.png", {
   sliceX: 3,
   sliceY: 1, 
   anims: {
@@ -61,14 +62,9 @@ function poof(x, y) {
   const smoke = add([
     sprite("poof", { anim: "poof" }),
     pos(x, y),
-    anchor("center"),
-
-function poof(x, y) {
-  const smoke = add([
-    sprite("poof", { anim: "poof" }),
-    pos(x, y),
-   
+    anchor("center")
   ]);
+
 
   // making the burk burk chicken sounds more diverse
   const soundSpeed = rand(0.7, 1.1);
@@ -79,7 +75,7 @@ function poof(x, y) {
   });
   smoke.play("poof", { speed: 16 });
   smoke.onAnimEnd(() => destroy(smoke));
-};
+}
 
 function feathers(x, y) {
   const feathers = add([
@@ -200,7 +196,7 @@ k.scene("game", () => {
         if (pairsFound === 3) {
           gameWon = true;
           const winnerBanner = add([
-            sprite("youWin"),
+            sprite("you_win"),
             pos(center().x, center().y - 50),
             anchor("center"),
             opacity(0)
@@ -208,9 +204,10 @@ k.scene("game", () => {
         
           const resetButton = add([
             sprite("reset_btn", { frame: 0 }),
-            pos(center().x, center().y + 60),
+            pos(center()),
             anchor("center"),
             area(),
+            "resetButton",
             opacity(0) // Keep it at 0 opacity until the player wins the game
           ]);
 
@@ -225,13 +222,11 @@ k.scene("game", () => {
             easings.easeOutQuad
           );
         
-          resetButton.onClick(() => { // When the reset button is clicked, reload the game scene
-            if (resetButton.opacity  > 0.8) {
+          k.onClick("resetButton", () => {
+            console.log("Reset button clicked!");
+            go("game");
+          });
 
-              cursor("default");
-              go("game");
-            }
-    });
         }
       } else {
         // No match, turn cards back over after a short delay
@@ -254,14 +249,8 @@ k.scene("game", () => {
     }
   })
 
-  // Win condition
-  if (pairsFound === 3) {
-
-    
-  };
 
 })
-
 
 
 k.go("game");
